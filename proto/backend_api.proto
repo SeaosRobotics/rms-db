@@ -1,0 +1,1041 @@
+syntax = "proto3";
+
+option go_package = "github.com/SeaosRobotics/rms-data-service/proto/backend_api";
+
+package backend_api;
+
+service BackendApiService {
+    rpc GetLocation(GetLocationRequest) returns (GetLocationResponse);
+    rpc GetJob(GetJobRequest) returns (GetJobResponse);
+    rpc AddJob(AddJobRequest) returns (AddJobResponse);
+    rpc UpdateJob(UpdateJobRequest) returns (UpdateJobResponse);
+    rpc DeleteJob(DeleteJobRequest) returns (DeleteJobResponse);
+
+    rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse);
+    rpc AddNotification(AddNotificationRequest) returns (AddNotificationResponse);
+    rpc UpdateNotification(UpdateNotificationRequest) returns (UpdateNotificationResponse);
+
+    rpc GetLocalization(GetLocalizationRequest) returns (GetLocalizationResponse);
+    rpc AddLocalization(AddLocalizationRequest) returns (AddLocalizationResponse);
+
+    rpc GetRobotStatus(GetRobotStatusRequest) returns (GetRobotStatusResponse);
+    rpc AddRobotStatus(AddRobotStatusRequest) returns (AddRobotStatusResponse);
+
+    rpc GetCustomLog(GetCustomLogRequest) returns (GetCustomLogResponse);
+    rpc AddCustomLog(AddCustomLogRequest) returns (AddCustomLogResponse);
+
+    rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    rpc AddUser(AddUserRequest) returns (AddUserResponse);
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+    rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+
+    rpc GetUserWorkspace(GetUserWorkspaceRequest) returns (GetUserWorkspaceResponse);
+    rpc SaveWorkspaceLocation(SaveLocationResponse) returns (GetUserWorkspaceResponse);
+    rpc UpdateWorkspaceLocation(SaveLocationResponse) returns (GetUserWorkspaceResponse);
+    rpc DeleteWorkspaceLocation(DeleteLocationResponse) returns (GetUserWorkspaceResponse);
+    rpc SaveWorkspaceSector(SaveSectorResponse) returns (GetUserWorkspaceResponse);
+    rpc UpdateWorkspaceSector(SaveSectorResponse) returns (GetUserWorkspaceResponse);
+    rpc DeleteWorkspaceSector(SaveSectorResponse) returns (GetUserWorkspaceResponse);
+
+    rpc GetPipes(GetPipesRequest) returns (GetPipesResponse);
+    rpc GetPipe(GetPipeRequest) returns (GetPipeResponse);
+    rpc SavePipe(SavePipeRequest) returns (GetPipesResponse);
+    rpc UpdatePipe(SavePipeRequest) returns (GetPipesResponse);
+    rpc DeletePipe(SavePipeRequest) returns (GetPipesResponse);
+
+    rpc GetAreas(GetAreasRequest) returns (GetAreasResponse);
+
+    rpc AddLocation(SaveLocationRequest) returns (SaveLocationResponse);
+    rpc UpdateLocation(UpdateLocationRequest) returns (SaveLocationResponse);
+    rpc DeleteLocation(DeleteLocationRequest) returns (DeleteLocationResponse);
+
+    rpc FetchSector(FetchSectorRequest) returns (FetchSectorResponse);
+    rpc AddSector(SaveSectorRequest) returns (SaveSectorResponse);
+    rpc UpdateSector(SaveSectorRequest) returns (SaveSectorResponse);
+    rpc DeleteSector(SaveSectorRequest) returns (SaveSectorResponse);
+
+    rpc GetMap(GetMapRequest) returns (GetMapResponse);
+    rpc SaveMap(SaveMapRequest) returns (SaveMapResponse);
+    rpc UpdateMap(SaveMapRequest) returns (SaveMapResponse);
+    rpc DeleteMap(SaveMapRequest) returns (DeleteMapResponse);
+
+    rpc GetMJob(GetMJobRequest) returns (GetMJobResponse);
+    rpc SaveMJob(SaveMJobRequest) returns (SaveMJobResponse);
+    rpc UpdateMJob(UpdateMJobRequest) returns (UpdateMJobResponse);
+    rpc DeleteMJob(DeleteMJobRequest) returns (DeleteMJobResponse);
+
+    rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
+    rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
+
+    rpc GetGoals(GetGoalRequest) returns (GetGoalResponse);
+
+    rpc GetTags(GetTagsRequest) returns (GetTagsResponse);
+
+    // Station related endpoints
+    rpc GetStations(GetStationsRequest) returns (GetStationsResponse);
+    rpc GetStation(GetStationRequest) returns (GetStationResponse);
+    rpc AddStation(AddStationRequest) returns (AddStationResponse);
+    rpc UpdateStation(UpdateStationRequest) returns (UpdateStationResponse);
+    rpc DeleteStation(DeleteStationRequest) returns (DeleteStationResponse);
+
+    rpc GetRobots(GetRobotsRequest) returns (GetRobotsResponse);
+    rpc UpdateRobot(UpdateRobotRequest) returns (UpdateRobotResponse);
+    rpc AddRobot(AddRobotRequest) returns (AddRobotResponse);
+    rpc DeleteRobot(DeleteRobotRequest) returns (DeleteRobotResponse);
+}
+
+message GetLocationRequest {
+    int32 client_id = 1;
+}
+
+message GetLocationResponse {
+    repeated Location locations = 1;
+}
+
+message GetMapRequest {
+  int32 sector_id   = 1;
+  int32 location_id = 2;
+}
+
+message GetMapResponse {
+  Map map = 1;
+}
+
+message SaveMapRequest {
+  Map map = 1;
+}
+
+message SaveMapResponse {
+  Map map = 1;
+}
+
+message DeleteMapResponse {
+  int32 result = 1;
+}
+
+message GetPipesRequest {
+  int32 sector_id   = 1;
+  int32 location_id = 2;
+}
+
+message GetPipesResponse {
+  repeated Pipe pipes = 1;
+}
+
+message GetPipeRequest {
+  int32 location_id = 1;
+  int32 sector_id   = 2;
+  int32 pipe_id     = 3;
+}
+
+message GetPipeResponse {
+  Pipe pipe = 1;
+}
+
+message SavePipeRequest {
+  int32 location_id = 1;
+  int32 sector_id   = 2;
+  Pipe pipe         = 3;
+}
+
+message GetAreasRequest {
+  int32 location_id = 1;
+  int32 sector_id   = 2;
+}
+
+message GetAreasResponse {
+  repeated Area areas = 1;
+}
+
+message SaveLocationRequest {
+  int32 client_id       = 1;
+  string location_name  = 2;
+  int32 user_id         = 3;
+}
+
+message SaveLocationResponse {
+  int32 location_id     = 1;
+  string location_name  = 2;
+  int32 error           = 3;
+  int32 user_id         = 4;
+}
+
+message DeleteLocationRequest {
+  int32 location_id =1;
+}
+
+message DeleteLocationResponse {
+  int32 location_id = 1;
+  int32 user_id     = 2;
+  int32 error       = 3;
+}
+
+message UpdateLocationRequest {
+  int32 location_id     = 1;
+  string location_name  = 2;
+  int32 user_id         = 3;
+}
+
+message FetchSectorRequest {
+  int32 sector_id     = 1;
+  int32 location_id   = 2;
+}
+
+message FetchSectorResponse {
+  Sector sector = 1;
+}
+
+message SaveSectorRequest {
+  int32 location_id   = 1;
+  string sector_name  = 2;
+  int32 user_id       = 3;
+  int32 sector_id     = 4;
+}
+
+message SaveSectorResponse {
+  int32 location_id   = 1;
+  int32 sector_id     = 2;
+  string sector_name  = 3;
+  int32 error         = 4;
+  int32 user_id       = 5;
+}
+
+message GetMJobRequest {
+  int32 sector_id   = 1;
+  int32 location_id = 2;
+  int32 job_id      = 3;
+}
+
+message GetMJobResponse {
+  repeated Job jobs = 1;
+}
+
+message SaveMJobRequest {
+  int32 sector_id   = 1;
+  int32 location_id = 2;
+  Job job           = 3;
+}
+
+message SaveMJobResponse {
+  Job job = 1;
+}
+
+message DeleteMJobRequest {
+  int32 sector_id   = 1;
+  int32 location_id = 2;
+  Job job           = 3;
+}
+
+message DeleteMJobResponse {
+  int32 result = 1;
+}
+
+message UpdateMJobRequest {
+  int32 sector_id   = 1;
+  int32 location_id = 2;
+  Job job           = 3;
+}
+
+message UpdateMJobResponse {
+  Job job = 1;
+}
+
+message GetTasksRequest {
+  // Empty message but may be expanded in the future
+}
+
+message GetTasksResponse {
+  repeated Task tasks = 1;
+}
+
+message GetTaskRequest {
+  int32 task_id = 1;
+  string task_name = 2;
+  string task_type = 3;
+}
+
+message GetTaskResponse {
+  Task task = 1;
+}
+
+message GetTagsRequest {
+  int32 sector_id = 1;
+  int32 location_id = 2;
+}
+
+message GetTagsResponse {
+  repeated Tag tags = 1;
+}
+
+message GetGoalRequest {
+  int32 sector_id = 1;
+  int32 location_id = 2;
+}
+
+message GetGoalResponse {
+  repeated Goal goals = 1;
+}
+
+message Date {
+  int32 year  = 1;
+  int32 month = 2;
+  int32 day   = 3;
+}
+
+message GetJobRequest {
+	enum FilterType {
+	  FT_NONE   = 0;
+	  FT_ACTIVE = 1;
+	  FT_NEXT   = 2;
+	  FT_ID     = 3;
+	  FT_UNIT   = 4;
+	  FT_DATE   = 5;
+	}
+	enum SortType {
+	  ST_NONE = 0;
+	  ST_UNIT = 1;
+    ST_JOB  = 2;
+    ST_USER = 3;
+    ST_TIME = 4;
+    ST_MEMO = 5;
+	}
+	enum OrderType {
+	  OT_NONE = 0;
+	  OT_ASC  = 1;
+    OT_DESC = 2;
+	}
+  int32 sector_id         = 1;
+  int32 location_id       = 2;
+  int32 robot_id          = 3;
+	int32 job_id            = 4;
+  int32 job_status        = 5;
+  Date job_from_date      = 6;
+  Date job_to_date        = 7;
+  int32 fetch_offset      = 8;
+  int32 fetch_limit       = 9;
+	FilterType filter_type  = 10;
+  SortType sort_type      = 11;
+	OrderType order_type    = 12;
+}
+
+message GetJobResponse {
+  repeated Job jobs = 1;
+}
+
+message AddJobRequest {
+  Job job = 1;
+}
+
+message AddJobResponse {
+  int32 result = 1;
+  int32 job_id = 2;
+}
+
+message UpdateJobRequest {
+  Job job = 1;
+}
+
+message UpdateJobResponse {
+  int32 result = 1;
+  int32 job_id = 2;
+}
+
+message DeleteJobRequest {
+  int32 job_id = 1;
+}
+
+message DeleteJobResponse {
+  int32 result = 1;
+}
+
+message GetNotificationRequest {
+	enum FilterType {
+	  FT_NONE   = 0;
+	  FT_DATE   = 1;
+    FT_UNREAD = 2;
+	}
+	enum SortType {
+	  ST_NONE = 0;
+	  ST_UNIT = 1;
+    ST_TIME = 2;
+	}
+	enum OrderType {
+	  OT_NONE = 0;
+	  OT_ASC  = 1;
+    OT_DESC = 2;
+	}
+  int32 location_id = 1;
+  int32 sector_id = 2;
+  Date filter_from_date = 3;
+  Date filter_to_date = 4;
+  int32 fetch_offset = 5;
+  int32 fetch_limit = 6;
+	FilterType filter_type = 7;
+  SortType sort_type = 8;
+	OrderType order_type = 9;
+}
+
+message GetNotificationResponse {
+  repeated Notification notifications = 1;
+}
+
+message AddNotificationRequest {
+  Notification notification = 1;
+}
+
+message AddNotificationResponse {
+  int32 result          = 1;
+  int32 notification_id = 2;
+}
+
+message UpdateNotificationRequest {
+  int32 location_id   = 1;
+  int32 sector_id     = 2;
+  double confirm_date = 3;
+}
+
+message UpdateNotificationResponse {
+  int32 result = 1;
+}
+
+message GetLocalizationRequest {
+	enum FilterType {
+	  FT_NONE = 0;
+	  FT_DATE = 1;
+	}
+	enum SortType {
+	  ST_NONE = 0;
+	  ST_UNIT = 1;
+    ST_TIME = 2;
+	}
+	enum OrderType {
+	  OT_NONE = 0;
+	  OT_ASC  = 1;
+    OT_DESC = 2;
+	}
+  int32 location_id       = 1;
+  int32 sector_id         = 2;
+  Date filter_from_date   = 3;
+  Date filter_to_date     = 4;
+  int32 fetch_offset      = 5;
+  int32 fetch_limit       = 6;
+	FilterType filter_type  = 7;
+  SortType sort_type      = 8;
+	OrderType order_type    = 9;
+}
+
+message GetLocalizationResponse {
+  repeated Localization localizations = 1;
+}
+
+message AddLocalizationRequest {
+  Localization localization = 1;
+}
+
+message AddLocalizationResponse {
+  int32 result          = 1;
+  int32 localization_id = 2;
+}
+
+message GetRobotStatusRequest {
+	enum FilterType {
+	  FT_NONE = 0;
+	  FT_DATE = 1;
+	}
+	enum SortType {
+	  ST_NONE = 0;
+	  ST_UNIT = 1;
+    ST_TIME = 2;
+	}
+	enum OrderType {
+	  OT_NONE = 0;
+	  OT_ASC  = 1;
+    OT_DESC = 2;
+	}
+  int32 location_id       = 1;
+  int32 sector_id         = 2;
+  Date filter_from_date   = 3;
+  Date filter_to_date     = 4;
+  int32 fetch_offset      = 5;
+  int32 fetch_limit       = 6;
+	FilterType filter_type  = 7;
+  SortType sort_type      = 8;
+	OrderType order_type    = 9;
+}
+
+message GetRobotStatusResponse {
+  repeated RobotStatus robot_statuses = 1;
+}
+
+message AddRobotStatusRequest {
+  RobotStatus robot_status = 1;
+}
+
+message AddRobotStatusResponse {
+  int32 result          = 1;
+  int32 robot_status_id = 2;
+}
+
+
+message GetCustomLogRequest {
+	enum FilterType {
+	  FT_NONE = 0;
+	  FT_DATE = 1;
+	}
+	enum SortType {
+	  ST_NONE = 0;
+	  ST_UNIT = 1;
+    ST_TIME = 2;
+	}
+	enum OrderType {
+	  OT_NONE = 0;
+	  OT_ASC  = 1;
+    OT_DESC = 2;
+	}
+  int32 location_id       = 1;
+  int32 sector_id         = 2;
+  Date filter_from_date   = 3;
+  Date filter_to_date     = 4;
+  int32 fetch_offset      = 5;
+  int32 fetch_limit       = 6;
+	FilterType filter_type  = 7;
+  SortType sort_type      = 8;
+	OrderType order_type    = 9;
+}
+
+message GetCustomLogResponse {
+  repeated CustomLog custom_logs = 1;
+}
+
+message AddCustomLogRequest {
+  CustomLog custom_log = 1;
+}
+
+message AddCustomLogResponse {
+  int32 result        = 1;
+  int32 custom_log_id = 2;
+}
+
+message Area {
+  int32 id                = 1;
+  string name             = 2;
+  repeated Point polygon  = 3;
+  int32 location          = 4;
+  int32 sector            = 5;
+}
+
+message Point {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Quaternion {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+  double w = 4;
+}
+
+message Pose {
+  Point position          = 1;
+  Quaternion orientation  = 2;
+}
+
+message MapMeta {
+  double resolution = 1;
+  int32 width       = 2;
+  int32 height      = 3;
+  Pose origin       = 4;
+}
+
+message MapImage {
+  string mime = 1;
+  string data = 2;
+}
+
+message GetUserRequest {
+	enum FilterType {
+	  FT_NONE = 0;
+	  FT_ID   = 1;
+	  FT_NAME = 2;
+	}
+	enum SortType {
+	  ST_NONE = 0;
+    ST_ID   = 1;
+    ST_NAME = 2;
+	}
+	enum OrderType {
+	  OT_NONE = 0;
+	  OT_ASC  = 1;
+    OT_DESC = 2;
+	}
+	int32 user_id           = 1;
+  string user_name        = 2;
+  int32 fetch_offset      = 3;
+  int32 fetch_limit       = 4;
+	FilterType filter_type  = 5;
+  SortType sort_type      = 6;
+	OrderType order_type    = 7;
+}
+
+message GetUserResponse {
+  repeated User users = 1;
+}
+
+message AddUserRequest {
+  User user = 1;
+}
+
+message AddUserResponse {
+  int32 result  = 1;
+  int32 user_id = 2;
+}
+
+message UpdateUserRequest {
+  User user = 1;
+}
+
+message UpdateUserResponse {
+  int32 result = 1;
+  int32 user_id = 2;
+}
+
+message DeleteUserRequest {
+  int32 user_id = 1;
+}
+
+message DeleteUserResponse {
+  int32 result = 1;
+}
+
+message GetUserWorkspaceRequest {
+  int32 user_id = 1;
+}
+
+message GetUserWorkspaceResponse {
+  repeated UserWorkspace user_workspaces = 1;
+}
+
+message Location {
+  int32 location_id       = 1;
+  int32 client_id         = 2;
+  string location_name    = 3;
+  repeated Sector sectors = 4;
+  int32 user_id           = 5;
+}
+
+message Sector {
+  int32 sector_id       = 1;
+  string sector_name    = 2;
+  int32 map_id          = 3;
+  Map map               = 4;
+  repeated Robot robots = 5;
+  repeated Goal goals   = 6;
+  repeated Tag tags     = 7;
+  repeated Pipe pipes   = 8;
+  repeated Job jobs     = 9;
+  repeated Area areas   = 10;
+  int32 location_id     = 11;
+  int32 user_id         = 12;
+  repeated int32 orchestration_bridge = 13;
+}
+
+message Map {
+  int32 map_id        = 1;
+  string map_name     = 2;
+  string map_location = 3;
+  string style_name   = 4;
+  string style_value  = 5;
+  MapMeta meta        = 6;
+  MapImage image      = 7;
+  int32 ratio         = 8;
+  int32 sector_id     = 9;
+  int32 location_id   = 10;
+}
+
+message Robot {
+  int32 robot_id      = 1;
+  string robot_name   = 2;
+  string robot_type   = 3;
+  int32 status        = 4;
+  int32 availableUp   = 5;
+  int32 availableDown = 6;
+  string pose         = 7;
+  string battery      = 8;
+  int32 slam          = 9;
+  int32 dock_id       = 10;
+  string host         = 11;
+  string port         = 12;
+}
+
+message Goal {
+  int32 goal_id     = 1;
+  string goal_name  = 2;
+  Pose pose         = 3;
+}
+
+message Tag {
+  int32 tag_id      = 1;
+  string tag_name   = 2;
+  string tag_group  = 3;
+  int32 tag_no      = 4;
+  int32 turn_dir    = 5;
+  int32 turn_angle  = 6;
+  double turn_dist  = 7;
+  int32 turn_init   = 8;
+  double radius     = 9;
+}
+
+message Pipe {
+  int32 id                  = 1;
+  int32 location_id         = 2;
+  int32 sector_id           = 3;
+  string name               = 4;
+  bool closed               = 5;
+  repeated PathSegment path = 6;
+}
+
+
+message PathSegment {
+  int32 id                  = 1;
+  string name               = 2;
+  Point point               = 3;
+  double radius             = 4;
+  double shift_from_centre  = 5;
+  int32 can_overtake        = 6;
+}
+
+message Task {
+  int32 id = 1;
+  string name = 2;
+  string type = 3;
+}
+
+message Job {
+  int32 job_id                = 1;
+  string job_name             = 2;
+  int32 job_order             = 3;
+  int32 job_status            = 4;
+  string job_message          = 5; 
+  int32 location_id           = 6;
+  int32 sector_id             = 7;
+  int32 robot_id              = 8;
+  repeated JobTask job_tasks  = 9;
+  double job_started          = 10;
+  double job_finished         = 11;
+  string create_user          = 12;
+  double create_date          = 13;
+  string update_user          = 14;
+  double update_date          = 15;
+  int32 update_count          = 16;
+  bool job_lock               = 17;
+  bool job_unlock             = 18;
+}
+
+
+message JobTask {
+  int32 id            = 1;
+  string name         = 2;
+  string text         = 3;
+  string explanation  = 4;
+  string label        = 5;
+  string placeholder  = 6;
+  int32 show          = 7;
+  int32 number        = 8;
+
+  repeated int32 array = 9;
+
+  int32 goal_id         = 10;
+  Goal goal             = 11;
+  int32 pipe_id         = 12;
+  Pipe pipe             = 13;
+  repeated int32 range  = 14;
+  Tag tag               = 15;
+  int32 tag_id         = 16;
+  bool boolean          = 17;
+  int32 area_id         = 18;
+  Area area             = 19;
+  Grab grab             = 20;
+
+  repeated SubTask sub_tasks  = 21;
+  repeated Job options        = 22;
+  repeated SwitchTask switch  = 23;
+
+  int32 status    = 24;
+  string message  = 25;
+  double started  = 26;
+  double finished = 27;
+  bool break      = 28;
+  bool skip       = 29;
+}
+
+message SwitchTask {
+  string name = 1;
+  bool selected = 2;
+  int32 status = 3;
+  repeated JobTask tasks = 4;
+}
+
+message SubTask {
+  int32 sub_id        = 1;
+  string name         = 2;
+  string text         = 3;
+  string explanation  = 4;
+  string label        = 5;
+  string placeholder  = 6;
+  int32 show          = 7;
+  int32 number        = 8;
+
+  repeated int32 array = 9;
+
+  int32 goal_id         = 10;
+  Goal goal             = 11;
+  int32 pipe_id         = 12;
+  Pipe pipe             = 13;
+  repeated int32 range  = 14;
+  Tag tag               = 15;
+  int32 tag_id         = 16;
+  bool boolean          = 17;
+  int32 area_id         = 18;
+  Area area             = 19;
+  Grab grab             = 20;
+
+  int32 status    = 21;
+  string message  = 22;
+  double started  = 23;
+  double finished = 24;
+  bool break      = 25;
+  bool skip       = 26;
+}
+
+
+message Notification {
+  int32 notification_id       = 1;
+  int32 location_id           = 2;
+  int32 sector_id             = 3;
+  int32 robot_id              = 4;
+  string robot_name           = 5;
+  string robot_type           = 6;
+  double notification_date    = 7;
+  string notification_type    = 8;
+  string notification_code    = 9;
+  string notification_message = 10;
+  double confirm_date         = 11;
+}
+
+message Localization {
+  int32 localization_id     = 1;
+  int32 location_id         = 2;
+  int32 sector_id           = 3;
+  int32 robot_id            = 4;
+  string robot_name         = 5;
+  string robot_type         = 6;
+  double localization_date  = 7;
+  Pose localization_pose    = 8;
+  string loop_closure       = 9;
+}
+
+message RobotStatus {
+  int32 robot_status_id     = 1;
+  int32 location_id         = 2;
+  int32 sector_id           = 3;
+  int32 robot_id            = 4;
+  string robot_name         = 5;
+  string robot_type         = 6;
+  double robot_status_date  = 7;
+  Pose robot_status_pose    = 8;
+  string loop_closure       = 9;
+  string battery_level      = 10;
+  string collision_count    = 11;
+  string moving_distance    = 12;
+}
+
+message CustomLog {
+  int32 custom_log_id       = 1;
+  int32 location_id         = 2;
+  int32 sector_id           = 3;
+  int32 robot_id            = 4;
+  string robot_name         = 5;
+  string robot_type         = 6;
+  double custom_log_date    = 7;
+  string custom_log_type    = 8;
+  string custom_log_code    = 9;
+  string custom_log_message = 10;
+}
+
+message User {
+  int32 user_id         = 1;
+  string user_name      = 2;
+  string user_password  = 3; 
+  string display_name   = 4; 
+  int32 auth_type       = 5;
+}
+
+message UserWorkspace {
+  int32 user_id = 1;
+  repeated UserLocation user_locations = 2;
+}
+
+message UserLocation {
+    int32 location_id                 = 1;
+    string location_name              = 2;
+    repeated UserSector user_sectors  = 3;
+}
+
+message UserSector {
+    int32 sector_id     = 1;
+    string sector_name  = 2;
+}
+
+message Grab {
+  repeated int32 range        = 1;
+	repeated GrabGoal goals     = 2;
+  repeated GrabArea areas     = 3;
+  repeated GrabJoin join_path = 4;
+}
+
+message GrabGoal {
+	int32 tag     = 1;
+  int32 goal_id =2;
+	Goal goal     = 3;
+}
+
+message GrabArea {
+  int32 goal_id = 1;
+  int32 area_id = 2;
+  Area area     = 3;
+}
+
+message GrabJoin {
+  int32 area_id = 1;
+  int32 goal_id = 2;
+  Goal goal     = 3;
+}
+
+// Station related messages
+message Station {
+    int32 id = 1;
+    int32 location_id = 2;
+    int32 sector_id = 3;
+    int32 number = 4;
+    string name = 5;
+    int32 robot_id = 6;
+    int32 status = 7;
+}
+
+message GetStationsRequest {
+    int32 location_id = 1;
+    int32 sector_id = 2;
+    int32 fetch_offset = 3;
+    int32 fetch_limit = 4;
+    enum FilterType {
+        FT_NONE = 0;
+        FT_TYPE = 1;
+        FT_NAME = 2;
+    }
+    enum SortType {
+        ST_NONE = 0;
+        ST_NAME = 1;
+        ST_TYPE = 2;
+        ST_CREATED = 3;
+    }
+    enum OrderType {
+        OT_NONE = 0;
+        OT_ASC = 1;
+        OT_DESC = 2;
+    }
+    FilterType filter_type = 5;
+    SortType sort_type = 6;
+    OrderType order_type = 7;
+}
+
+message GetStationsResponse {
+    repeated Station stations = 1;
+}
+
+message GetStationRequest {
+    int32 id = 1;
+    int32 location_id = 2;
+    int32 sector_id = 3;
+}
+
+message GetStationResponse {
+    Station station = 1;
+}
+
+message AddStationRequest {
+    Station station = 1;
+}
+
+message AddStationResponse {
+    int32 result = 1;
+    int32 id = 2;
+}
+
+message UpdateStationRequest {
+    Station station = 1;
+}
+
+message UpdateStationResponse {
+    int32 result = 1;
+}
+
+message DeleteStationRequest {
+    int32 id = 1;
+    int32 location_id = 2;
+    int32 sector_id = 3;
+}
+
+message DeleteStationResponse {
+    int32 result = 1;
+}
+
+message GetRobotsRequest {
+  int32 location_id = 1;
+  int32 sector_id = 2;
+}
+
+message GetRobotsResponse {
+  repeated Robot robots = 1;
+}
+
+message UpdateRobotRequest {
+  int32 location_id = 1;
+  int32 sector_id = 2;
+  Robot robot = 3;
+}
+
+message UpdateRobotResponse {
+  int32 result = 1;
+}
+
+message AddRobotRequest {
+  int32 location_id = 1;
+  int32 sector_id = 2;
+  Robot robot = 3;
+}
+
+message AddRobotResponse {
+  int32 result = 1;
+  int32 robot_id = 2;
+}
+
+message DeleteRobotRequest {
+  int32 location_id = 1;
+  int32 sector_id = 2;
+  int32 robot_id = 3;
+}
+
+message DeleteRobotResponse {
+  int32 result = 1;
+}
+
+message GetUsersRequest {
+  // Empty message but may be expanded in the future
+}
+
+message GetUsersResponse {
+  repeated User users = 1;
+}

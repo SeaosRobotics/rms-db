@@ -1,0 +1,11 @@
+{
+  "mongodb": {
+    "host": "mongodb://muser:mpw27017@localhost:27017/rms?authSource=admin",
+    "port": "27017",
+    "user": "muser",
+    "pass": "mpw27017",
+    "name": "rms",
+    "timeout": 120
+  }
+}
+

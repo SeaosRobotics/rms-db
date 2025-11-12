@@ -1,0 +1,28 @@
+{
+  "debug": true,
+  "server": {
+    "address": "0.0.0.0:50151"
+  },
+  "context": {
+    "timeout": 2
+  },
+  "dbtype": {
+    "mongodb": true,
+    "documentdb": false
+  },
+  "database": {
+    "host": "mysql",
+    "port": "3306",
+    "user": "user",
+    "pass": "password",
+    "name": "rms"
+  },
+  "mongodb": {
+    "host": "mongodb",
+    "port": "27017",
+    "name": "rms",
+    "username": "muser",
+    "password": "mpw27017"
+  }
+}
+
